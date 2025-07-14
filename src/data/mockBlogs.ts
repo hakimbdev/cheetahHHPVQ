@@ -1,0 +1,112 @@
+export const mockBlogs = [
+  {
+    id: "1",
+    title: "Building Scalable React Applications with TypeScript",
+    description: "Learn best practices for creating maintainable and scalable React applications using TypeScript. Explore advanced patterns and architectural decisions.",
+    image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Alex Chen",
+    date: "5 hours ago",
+    readTime: "8 min read",
+    likes: 142,
+    comments: 23,
+    category: "React",
+    trending: true
+  },
+  {
+    id: "2",
+    title: "The Complete Guide to Web3 Authentication",
+    description: "Implement secure authentication in your decentralized applications. Learn about wallet connections, signing, and user management in Web3.",
+    image: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Maria Rodriguez",
+    date: "1 day ago",
+    readTime: "15 min read",
+    likes: 89,
+    comments: 12,
+    category: "Web3"
+  },
+  {
+    id: "3",
+    title: "Modern CSS Techniques for Better UI Design",
+    description: "Discover advanced CSS techniques including Grid, Flexbox, and custom properties to create stunning user interfaces.",
+    image: "https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "David Kim",
+    date: "2 days ago",
+    readTime: "6 min read",
+    likes: 76,
+    comments: 18,
+    category: "CSS"
+  },
+  {
+    id: "4",
+    title: "Introduction to Smart Contract Development",
+    description: "Get started with smart contract development using Solidity. Learn the fundamentals and build your first decentralized application.",
+    image: "https://images.pexels.com/photos/730547/pexels-photo-730547.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Emily Johnson",
+    date: "3 days ago",
+    readTime: "12 min read",
+    likes: 156,
+    comments: 34,
+    category: "Blockchain",
+    trending: true
+  },
+  {
+    id: "5",
+    title: "Optimizing Performance in Next.js Applications",
+    description: "Learn how to optimize your Next.js applications for better performance. Explore code splitting, image optimization, and caching strategies.",
+    image: "https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Michael Brown",
+    date: "4 days ago",
+    readTime: "10 min read",
+    likes: 98,
+    comments: 16,
+    category: "Next.js"
+  },
+  {
+    id: "6",
+    title: "State Management in Modern React Apps",
+    description: "Compare different state management solutions for React applications. Learn when to use Context API, Zustand, or Redux Toolkit.",
+    image: "https://images.pexels.com/photos/1181244/pexels-photo-1181244.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Lisa Wang",
+    date: "5 days ago",
+    readTime: "9 min read",
+    likes: 67,
+    comments: 21,
+    category: "React"
+  },
+  {
+    id: "7",
+    title: "Building Responsive Web Applications",
+    description: "Master the art of responsive design using modern CSS techniques and frameworks. Create applications that work on all devices.",
+    image: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "James Wilson",
+    date: "6 days ago",
+    readTime: "7 min read",
+    likes: 43,
+    comments: 9,
+    category: "CSS"
+  },
+  {
+    id: "8",
+    title: "Testing Strategies for Frontend Applications",
+    description: "Implement comprehensive testing strategies for your frontend applications. Learn about unit testing, integration testing, and E2E testing.",
+    image: "https://images.pexels.com/photos/1181298/pexels-photo-1181298.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Anna Taylor",
+    date: "1 week ago",
+    readTime: "11 min read",
+    likes: 124,
+    comments: 28,
+    category: "Testing"
+  },
+  {
+    id: "9",
+    title: "GraphQL vs REST: Choosing the Right API",
+    description: "Compare GraphQL and REST APIs for your next project. Understand the pros and cons of each approach and when to use them.",
+    image: "https://images.pexels.com/photos/1181345/pexels-photo-1181345.jpeg?auto=compress&cs=tinysrgb&w=800",
+    author: "Robert Davis",
+    date: "1 week ago",
+    readTime: "8 min read",
+    likes: 87,
+    comments: 15,
+    category: "API"
+  }
+];
