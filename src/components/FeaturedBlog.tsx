@@ -94,58 +94,49 @@ As we look to the future, Web3 development will continue to grow in importance. 
 
   return (
     <>
-      <div className={`relative ${darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-900' : 'bg-gradient-to-r from-purple-50 to-pink-50'} rounded-2xl p-8 mb-8 overflow-hidden`}>
+      <div className={`relative ${darkMode ? 'bg-gradient-to-r from-gray-800 to-gray-900' : 'bg-gradient-to-r from-purple-50 to-pink-50'} rounded-2xl p-4 sm:p-8 mb-8 overflow-hidden`}>
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl transform translate-x-32 -translate-y-32"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur-3xl transform -translate-x-24 translate-y-24"></div>
+          <div className="absolute top-0 right-0 w-40 h-40 sm:w-64 sm:h-64 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full blur-3xl transform translate-x-16 -translate-y-16 sm:translate-x-32 sm:-translate-y-32"></div>
+          <div className="absolute bottom-0 left-0 w-28 h-28 sm:w-48 sm:h-48 bg-gradient-to-tr from-blue-500 to-purple-500 rounded-full blur-3xl transform -translate-x-10 translate-y-10 sm:-translate-x-24 sm:translate-y-24"></div>
         </div>
 
         <div className="relative z-10">
           <div className="flex items-center space-x-2 mb-4">
             <TrendingUp className="w-5 h-5 text-purple-500" />
-            <span className={`text-sm font-medium ${darkMode ? 'text-purple-400' : 'text-purple-600'}`}>Featured Article</span>
+            <span className={`text-xs sm:text-sm font-medium ${darkMode ? 'text-purple-400' : 'text-purple-600'}`}>Featured Article</span>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-center">
             {/* Content */}
             <div>
-              <h2 className={`text-3xl font-bold mb-4 leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>
-                {featuredBlog.title}
-              </h2>
-              
-              <p className={`text-lg mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
-                {featuredBlog.description}
-              </p>
+              <h2 className={`text-xl sm:text-3xl font-bold mb-4 leading-tight ${darkMode ? 'text-white' : 'text-gray-900'}`}>{featuredBlog.title}</h2>
+              <p className={`text-sm sm:text-lg mb-6 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>{featuredBlog.description}</p>
 
               {/* Meta Info */}
-              <div className="flex items-center space-x-6 mb-6">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-2 sm:space-y-0 mb-6">
                 <div className="flex items-center space-x-2">
                   <User className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{featuredBlog.author}</span>
+                  <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{featuredBlog.author}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Clock className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-                  <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{featuredBlog.readTime}</span>
+                  <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{featuredBlog.readTime}</span>
                 </div>
               </div>
 
               {/* Actions */}
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
+                <div className="flex items-center space-x-4 sm:space-x-6">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onLike?.('featured-blog');
                     }}
-                    className={`flex items-center space-x-2 transition-colors ${
-                      isLiked
-                        ? 'text-red-500'
-                        : darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'
-                    }`}
+                    className={`flex items-center space-x-2 transition-colors ${isLiked ? 'text-red-500' : darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}
                   >
                     <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
-                    <span>{featuredBlog.likes}</span>
+                    <span className="text-xs sm:text-base">{featuredBlog.likes}</span>
                   </button>
                   <button
                     onClick={(e) => {
@@ -155,25 +146,21 @@ As we look to the future, Web3 development will continue to grow in importance. 
                     className={`flex items-center space-x-2 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}
                   >
                     <MessageCircle className="w-5 h-5" />
-                    <span>{featuredBlog.comments + comments.length}</span>
+                    <span className="text-xs sm:text-base">{featuredBlog.comments + comments.length}</span>
                   </button>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       onBookmark?.('featured-blog');
                     }}
-                    className={`transition-colors ${
-                      isBookmarked
-                        ? 'text-purple-500'
-                        : darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'
-                    }`}
+                    className={`transition-colors ${isBookmarked ? 'text-purple-500' : darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'}`}
                   >
                     <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
                   </button>
                 </div>
                 <button
                   onClick={() => setShowModal(true)}
-                  className="bg-[#a855f7] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#9333ea] transition-all duration-300 flex items-center space-x-2 group"
+                  className="bg-[#a855f7] text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium hover:bg-[#9333ea] transition-all duration-300 flex items-center space-x-2 group"
                 >
                   <span>Read More</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

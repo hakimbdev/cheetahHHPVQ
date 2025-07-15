@@ -60,7 +60,7 @@ const MyBlogCard: React.FC<MyBlogCardProps> = ({ blog, darkMode, onEdit, onDelet
   return (
     <div className={`group relative ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden`}>
       {/* Image */}
-      <div className="relative h-48 overflow-hidden">
+      <div className="relative h-40 sm:h-48 overflow-hidden">
         <img
           src={blog.image}
           alt={blog.title}
@@ -68,17 +68,17 @@ const MyBlogCard: React.FC<MyBlogCardProps> = ({ blog, darkMode, onEdit, onDelet
         />
         
         {/* Status Badge */}
-        <div className={`absolute top-3 left-3 ${getStatusColor(blog.status)} text-white px-2 py-1 rounded-full text-xs font-medium`}>
+        <div className={`absolute top-2 left-2 ${getStatusColor(blog.status)} text-white px-2 py-1 rounded-full text-xs font-medium`}>
           {getStatusText(blog.status)}
         </div>
 
         {/* Category Badge */}
-        <div className="absolute top-3 right-3 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+        <div className="absolute top-2 right-2 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium">
           {blog.category}
         </div>
 
         {/* Menu Button */}
-        <div className="absolute bottom-3 right-3">
+        <div className="absolute bottom-2 right-2">
           <div className="relative">
             <button
               onClick={() => setShowMenu(!showMenu)}
@@ -127,47 +127,47 @@ const MyBlogCard: React.FC<MyBlogCardProps> = ({ blog, darkMode, onEdit, onDelet
       </div>
 
       {/* Content */}
-      <div className="p-6">
-        <h3 className={`text-lg font-semibold mb-2 line-clamp-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+      <div className="p-4 sm:p-6">
+        <h3 className={`text-base sm:text-lg font-semibold mb-2 line-clamp-2 ${darkMode ? 'text-white' : 'text-gray-900'}`}>
           {blog.title}
         </h3>
         
-        <p className={`text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+        <p className={`text-xs sm:text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
           {blog.description}
         </p>
 
         {/* Meta Info */}
-        <div className="flex items-center space-x-4 mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 mb-4">
           <div className="flex items-center space-x-1">
             <Calendar className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-            <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.date}</span>
+            <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.date}</span>
           </div>
           <div className="flex items-center space-x-1">
             <Clock className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-            <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.readTime}</span>
+            <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.readTime}</span>
           </div>
         </div>
 
         {/* Stats */}
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
           <div className="flex items-center space-x-4">
             <button
               onClick={() => setLiked(l => !l)}
               className={`flex items-center space-x-1 transition-colors ${liked ? 'text-red-500' : darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}
             >
               <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.likes + (liked ? 1 : 0)}</span>
+              <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.likes + (liked ? 1 : 0)}</span>
             </button>
             <button
               onClick={() => setShowCommentBox(prev => !prev)}
               className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}
             >
               <MessageCircle className="w-4 h-4" />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.comments + comments.length}</span>
+              <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.comments + comments.length}</span>
             </button>
             <div className="flex items-center space-x-1">
               <Eye className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.views}</span>
+              <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.views}</span>
             </div>
             <button
               onClick={() => setBookmarked(b => !b)}

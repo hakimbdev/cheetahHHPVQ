@@ -102,35 +102,35 @@ This comprehensive guide is designed to help developers at all levels improve th
     <>
       <div className={`group relative ${darkMode ? 'bg-gray-800' : 'bg-white'} rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden transform hover:-translate-y-1`}>
         {/* Image */}
-        <div className="relative h-48 overflow-hidden">
+        <div className="relative h-40 sm:h-48 overflow-hidden">
           <img
             src={blog.image}
             alt={blog.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
           />
           {blog.trending && (
-            <div className="absolute top-3 left-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
+            <div className="absolute top-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center space-x-1">
               <TrendingUp className="w-3 h-3" />
               <span>Trending</span>
             </div>
           )}
-          <div className="absolute top-3 right-3 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+          <div className="absolute top-2 right-2 bg-purple-600 text-white px-2 py-1 rounded-full text-xs font-medium">
             {blog.category}
           </div>
         </div>
 
         {/* Content */}
-        <div className="p-6">
-          <h3 className={`text-lg font-semibold mb-2 line-clamp-2 ${darkMode ? 'text-white' : 'text-gray-900'} group-hover:text-purple-500 transition-colors`}>
+        <div className="p-4 sm:p-6">
+          <h3 className={`text-base sm:text-lg font-semibold mb-2 line-clamp-2 ${darkMode ? 'text-white' : 'text-gray-900'} group-hover:text-purple-500 transition-colors`}>
             {blog.title}
           </h3>
           
-          <p className={`text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
+          <p className={`text-xs sm:text-sm mb-4 line-clamp-3 ${darkMode ? 'text-gray-300' : 'text-gray-600'}`}>
             {blog.description}
           </p>
 
           {/* Meta Info */}
-          <div className="flex items-center space-x-4 mb-4">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0 mb-4">
             <div className="flex items-center space-x-1">
               <User className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
               <button
@@ -138,19 +138,19 @@ This comprehensive guide is designed to help developers at all levels improve th
                   e.stopPropagation();
                   onAuthorClick?.(blog.author);
                 }}
-                className={`text-sm ${darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-600'} transition-colors cursor-pointer`}
+                className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-600'} transition-colors cursor-pointer`}
               >
                 {blog.author}
               </button>
             </div>
             <div className="flex items-center space-x-1">
               <Clock className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.readTime}</span>
+              <span className={`text-xs sm:text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.readTime}</span>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between space-y-2 sm:space-y-0">
             <div className="flex items-center space-x-4">
               <button
                 onClick={(e) => {
@@ -164,7 +164,7 @@ This comprehensive guide is designed to help developers at all levels improve th
                 }`}
               >
                 <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
-                <span className="text-sm">{blog.likes}</span>
+                <span className="text-xs sm:text-sm">{blog.likes}</span>
               </button>
               <button
                 onClick={(e) => {
@@ -174,7 +174,7 @@ This comprehensive guide is designed to help developers at all levels improve th
                 className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}
               >
                 <MessageCircle className="w-4 h-4" />
-                <span className="text-sm">{blog.comments}</span>
+                <span className="text-xs sm:text-sm">{blog.comments}</span>
               </button>
             </div>
             <div className="flex items-center space-x-2">

@@ -55,9 +55,9 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode = false, currentPage, setCurre
   const [showCartDropdown, setShowCartDropdown] = useState(false);
 
   return (
-    <nav className="w-full px-4 sm:px-6 md:px-10 py-4 flex items-center justify-between bg-gradient-to-r from-[#1a1440] to-[#1a1a2e] shadow-lg relative">
+    <nav className="w-full px-2 sm:px-4 md:px-10 py-3 sm:py-4 flex flex-wrap items-center justify-between bg-gradient-to-r from-[#1a1440] to-[#1a1a2e] shadow-lg relative">
       {/* Left: Logo & Brand */}
-      <div className="flex items-center space-x-3">
+      <div className="flex items-center space-x-2 sm:space-x-3">
         {/* Sidebar toggle for mobile (only visible on mobile) */}
         <button
           className="md:hidden mr-2 text-white p-2 rounded-lg hover:bg-[#23214a] focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -70,14 +70,14 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode = false, currentPage, setCurre
         <img
           src="https://res.cloudinary.com/da8ptobvx/image/upload/v1751980304/Header_-_Copy_paqzpv.png"
           alt="Logo"
-          className="w-10 h-10 rounded-full object-contain"
+          className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-contain"
         />
-        <span className="text-2xl font-extrabold tracking-wide text-white uppercase">CHEETAHHPVQ</span>
+        <span className="text-lg sm:text-2xl font-extrabold tracking-wide text-white uppercase">CHEETAHHPVQ</span>
       </div>
 
       {/* Center: Nav Links & Search (hide on mobile) */}
       <div className="hidden md:flex flex-1 flex-col items-center">
-        <div className="flex space-x-8 mb-3">
+        <div className="flex space-x-4 sm:space-x-8 mb-2 sm:mb-3">
           {navLinks.map(link => (
             <button
               key={link.page}
@@ -89,35 +89,35 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode = false, currentPage, setCurre
             </button>
           ))}
         </div>
-        <div className="relative w-full max-w-md">
+        <div className="relative w-full max-w-xs sm:max-w-md">
           <input
             type="text"
             placeholder="Search Product"
-            className="w-full pl-12 pr-4 py-2 rounded-full bg-[#23214a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 border border-[#2d295e]"
+            className="w-full pl-10 pr-4 py-2 rounded-full bg-[#23214a] text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 border border-[#2d295e] text-sm sm:text-base"
           />
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
         </div>
       </div>
 
       {/* Right: Icons, Avatar, Greeting (hide on mobile) */}
-      <div className="hidden md:flex items-center space-x-6">
+      <div className="hidden md:flex items-center space-x-4 sm:space-x-6">
         {/* Glowing icon placeholder */}
-        <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg">
           <img
             src="https://res.cloudinary.com/da8ptobvx/image/upload/v1752567813/Group_1000004361_mp5b2u.png"
             alt="Icon"
-            className="w-10 h-10 rounded-full object-cover"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
           />
         </div>
         {/* Cart icon with related products dropdown */}
         <div className="relative">
           <div
-            className="w-10 h-10 rounded-full flex items-center justify-center bg-[#23214a] cursor-pointer hover:bg-[#2d295e] transition"
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-[#23214a] cursor-pointer hover:bg-[#2d295e] transition"
             onMouseEnter={() => setShowCartDropdown(true)}
             onMouseLeave={() => setShowCartDropdown(false)}
             onClick={() => setShowCartDropdown((v) => !v)}
           >
-            <ShoppingCart className="w-6 h-6 text-white" />
+            <ShoppingCart className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
           </div>
           {showCartDropdown && (
             <div
