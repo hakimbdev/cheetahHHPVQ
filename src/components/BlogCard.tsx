@@ -29,9 +29,10 @@ interface RelatedArticle {
 interface BlogCardProps {
   blog: BlogPost;
   darkMode: boolean;
+  onAuthorClick?: (authorName: string) => void;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ blog, darkMode }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ blog, darkMode, onAuthorClick }) => {
   const [showModal, setShowModal] = useState(false);
 
   const relatedArticles: RelatedArticle[] = [
@@ -115,7 +116,15 @@ This comprehensive guide is designed to help developers at all levels improve th
           <div className="flex items-center space-x-4 mb-4">
             <div className="flex items-center space-x-1">
               <User className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.author}</span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onAuthorClick?.(blog.author);
+                }}
+                className={`text-sm ${darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-600'} transition-colors cursor-pointer`}
+              >
+                {blog.author}
+              </button>
             </div>
             <div className="flex items-center space-x-1">
               <Clock className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
@@ -185,7 +194,15 @@ This comprehensive guide is designed to help developers at all levels improve th
               <div className="flex items-center space-x-4 mb-6 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
                   <User className="w-4 h-4" />
-                  <span>{blog.author}</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAuthorClick?.(blog.author);
+                    }}
+                    className="hover:text-purple-500 transition-colors cursor-pointer"
+                  >
+                    {blog.author}
+                  </button>
                 </div>
                 <span>•</span>
                 <span>{blog.date}</span>
@@ -243,7 +260,15 @@ This comprehensive guide is designed to help developers at all levels improve th
                       <h4 className={`font-semibold text-sm ${darkMode ? 'text-white' : 'text-gray-900'}`}>{article.title}</h4>
                       <p className="text-gray-500 text-xs line-clamp-2">{article.excerpt}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-gray-400 text-xs">{article.author}</span>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAuthorClick?.(article.author);
+                          }}
+                          className="text-gray-400 text-xs hover:text-purple-500 transition-colors cursor-pointer"
+                        >
+                          {article.author}
+                        </button>
                         <div className="flex items-center space-x-1">
                           <Heart className="w-3 h-3 text-red-400" />
                           <span className="text-gray-400 text-xs">{article.likes}</span>

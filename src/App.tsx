@@ -29,7 +29,7 @@ function App() {
     bio: 'Passionate Web3 developer and blockchain enthusiast. Building the future of decentralized applications.',
     location: 'San Francisco, CA',
     joined: 'Jan 2023',
-    avatar: 'https://res.cloudinary.com/da8ptobvx/image/upload/v1752071208/Header_-_Copy_2_tbflho.png',
+    avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
   });
 
   // Additional articles for "Load More" functionality
@@ -211,6 +211,11 @@ function App() {
     setShowMoreArticles(true);
   };
 
+  const handleAuthorClick = (authorName: string) => {
+    // Navigate to profile page when author is clicked
+    setCurrentPage('profile');
+  };
+
   const displayedBlogs = showMoreArticles ? [...blogs, ...additionalArticles] : blogs;
 
   return (
@@ -260,7 +265,16 @@ function App() {
         <main className="flex-1 w-0 bg-gradient-to-b from-[#181A2A] to-[#23214a] pt-6 md:pt-8 pb-0 px-2 md:px-4">
           {currentPage === 'home' ? (
             <div>
-              {/* Slider above header */}
+              {/* Banner image above slider */}
+              <div className="mb-4 w-full max-w-[1175px] mx-auto">
+                <img
+                  src="https://res.cloudinary.com/da8ptobvx/image/upload/v1752571727/Frame_1000008447_ta0ug3.png"
+                  alt="CheetaHQ Banner"
+                  className="w-full object-cover rounded-3xl"
+                />
+              </div>
+
+              {/* Slider below banner */}
               <div className="mb-4">
                 <Slider />
               </div>
@@ -281,7 +295,7 @@ function App() {
 
               {/* Featured Blog */}
               <div>
-                <FeaturedBlog darkMode={darkMode} />
+                <FeaturedBlog darkMode={darkMode} onAuthorClick={handleAuthorClick} />
               </div>
 
               {/* Filter Tags */}
@@ -303,7 +317,7 @@ function App() {
               {/* Blog Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {displayedBlogs.map((blog) => (
-                  <BlogCard key={blog.id} blog={blog} darkMode={darkMode} />
+                  <BlogCard key={blog.id} blog={blog} darkMode={darkMode} onAuthorClick={handleAuthorClick} />
                 ))}
               </div>
 

@@ -32,8 +32,12 @@ const Topbar: React.FC<TopbarProps> = ({ darkMode }) => {
         <button className={`p-2 rounded-lg transition-colors ${darkMode ? 'text-gray-400 hover:text-white hover:bg-gray-800' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'}`}>
           <Settings className="w-5 h-5" />
         </button>
-        <div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-          <User className="w-4 h-4 text-white" />
+        <div className="w-8 h-8 rounded-full flex items-center justify-center">
+          <img
+            src="https://res.cloudinary.com/da8ptobvx/image/upload/v1752567813/Group_1000004361_mp5b2u.png"
+            alt="Icon"
+            className="w-8 h-8 rounded-full object-cover"
+          />
         </div>
       </div>
     </div>

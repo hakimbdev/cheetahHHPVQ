@@ -1,5 +1,8 @@
 import React from 'react';
-import { Home, BookOpen, Gift, ShoppingBag, Image, FileText, User, X } from 'lucide-react';
+import { ShoppingBag, Image, FileText, User, X } from 'lucide-react';
+import HomeIcon from './icons/HomeIcon';
+import BlogIcon from './icons/BlogIcon';
+import RewardIcon from './icons/RewardIcon';
 
 interface SidebarProps {
   darkMode: boolean;
@@ -13,9 +16,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({ darkMode, setDarkMode, currentPage, setCurrentPage, isOpen = false, onClose }) => {
   const menuItems = [
-    { icon: Home, label: 'Home', page: 'home' as const },
-    { icon: BookOpen, label: 'My Blogs', page: 'my-blogs' as const },
-    { icon: Gift, label: 'Rewards', page: 'rewards' as const },
+    { icon: HomeIcon, label: 'Home', page: 'home' as const },
+    { icon: BlogIcon, label: 'My Blogs', page: 'my-blogs' as const },
+    { icon: RewardIcon, label: 'Rewards', page: 'rewards' as const },
   ];
 
   // Mobile sidebar overlay
@@ -38,13 +41,13 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, setDarkMode, currentPage, s
                       setCurrentPage(item.page);
                       if (onClose) onClose();
                     }}
-                    className={`w-full flex items-center space-x-3 px-5 py-3 rounded-xl transition-colors text-base font-semibold shadow-sm
+                    className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium shadow-sm
                       ${currentPage === item.page
                         ? 'bg-[#a855f7] text-white shadow-lg'
                         : 'text-white hover:bg-[#a855f7] hover:text-white'}
                     `}
                   >
-                    <item.icon className="w-5 h-5" />
+                    <item.icon className="w-4 h-4" />
                     <span>{item.label}</span>
                   </button>
                 </li>
@@ -72,13 +75,13 @@ const Sidebar: React.FC<SidebarProps> = ({ darkMode, setDarkMode, currentPage, s
                   onClick={() => {
                     setCurrentPage(item.page);
                   }}
-                  className={`w-full flex items-center space-x-3 px-5 py-3 rounded-xl transition-colors text-base font-semibold shadow-sm
+                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium shadow-sm
                     ${currentPage === item.page
                       ? 'bg-[#a855f7] text-white shadow-lg'
                       : 'text-gray-300 hover:text-white hover:bg-[#23244a]'}
                   `}
                 >
-                  <item.icon className="w-5 h-5" />
+                  <item.icon className="w-4 h-4" />
                   <span>{item.label}</span>
                 </button>
               </li>

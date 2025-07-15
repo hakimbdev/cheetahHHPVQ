@@ -14,9 +14,10 @@ interface RelatedArticle {
 
 interface FeaturedBlogProps {
   darkMode: boolean;
+  onAuthorClick?: (authorName: string) => void;
 }
 
-const FeaturedBlog: React.FC<FeaturedBlogProps> = ({ darkMode }) => {
+const FeaturedBlog: React.FC<FeaturedBlogProps> = ({ darkMode, onAuthorClick }) => {
   const [showModal, setShowModal] = useState(false);
 
   const featuredBlog = {
@@ -189,7 +190,15 @@ As we look to the future, Web3 development will continue to grow in importance. 
               <div className="flex items-center space-x-4 mb-6 text-sm text-gray-500">
                 <div className="flex items-center space-x-2">
                   <User className="w-4 h-4" />
-                  <span>{featuredBlog.author}</span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAuthorClick?.(featuredBlog.author);
+                    }}
+                    className="hover:text-purple-500 transition-colors cursor-pointer"
+                  >
+                    {featuredBlog.author}
+                  </button>
                 </div>
                 <span>•</span>
                 <span>{featuredBlog.date}</span>

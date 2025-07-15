@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, ShoppingCart, ChevronDown, Menu, X, Star } from 'lucide-react';
+import { Search, ShoppingCart, Menu, X, Star } from 'lucide-react';
+import ProfileHeader from './ProfileHeader';
 
 interface NavbarProps {
   darkMode?: boolean;
@@ -101,8 +102,12 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode = false, currentPage, setCurre
       {/* Right: Icons, Avatar, Greeting (hide on mobile) */}
       <div className="hidden md:flex items-center space-x-6">
         {/* Glowing icon placeholder */}
-        <div className="w-10 h-10 rounded-full flex items-center justify-center bg-gradient-to-tr from-purple-500 via-pink-500 to-blue-500 shadow-lg animate-pulse">
-          <span className="text-white text-xl">🎨</span>
+        <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg">
+          <img
+            src="https://res.cloudinary.com/da8ptobvx/image/upload/v1752567813/Group_1000004361_mp5b2u.png"
+            alt="Icon"
+            className="w-10 h-10 rounded-full object-cover"
+          />
         </div>
         {/* Cart icon with related products dropdown */}
         <div className="relative">
@@ -144,20 +149,15 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode = false, currentPage, setCurre
             </div>
           )}
         </div>
-        {/* User avatar and greeting - clickable to go to profile */}
-        <button
-          className="flex items-center space-x-2 focus:outline-none group"
+        {/* Profile Header Component */}
+        <ProfileHeader
+          profile={{
+            name: profile?.name || 'Precious',
+            email: 'Precious30@gmail.com',
+            avatar: profile?.avatar || "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+          }}
           onClick={() => setCurrentPage('profile')}
-          aria-label="Go to profile"
-        >
-          <img
-            src={profile?.avatar || "https://randomuser.me/api/portraits/men/32.jpg"}
-            alt="avatar"
-            className="w-10 h-10 rounded-full border-2 border-purple-500 object-cover group-hover:ring-2 group-hover:ring-purple-400 transition"
-          />
-          <span className="text-white font-medium group-hover:text-purple-400 transition">Hi, {profile?.name || 'Precious'}</span>
-          <ChevronDown className="w-5 h-5 text-white group-hover:text-purple-400 transition" />
-        </button>
+        />
       </div>
 
       {/* Mobile Dropdown Menu (not sidebar) */}
