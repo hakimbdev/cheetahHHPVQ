@@ -156,6 +156,9 @@ interface BlogProps {
 const Blog: React.FC<BlogProps> = ({ darkMode }) => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [likedPosts, setLikedPosts] = useState<Set<number>>(new Set());
+  const [bookmarkedPosts, setBookmarkedPosts] = useState<Set<number>>(new Set());
+  const [blogPosts, setBlogPosts] = useState(mockBlogPosts);
 
   const handleReadMore = (post: BlogPost) => {
     setSelectedPost(post);
@@ -179,6 +182,45 @@ Key topics covered include:
 - Security considerations and best practices
 
 This comprehensive guide is designed to help developers at all levels improve their skills and build better applications.`;
+  };
+
+  // Blog interaction handlers
+  const handleLike = (postId: number) => {
+    setLikedPosts(prev => {
+      const newLiked = new Set(prev);
+      if (newLiked.has(postId)) {
+        newLiked.delete(postId);
+        setBlogPosts(prevPosts =>
+          prevPosts.map(post =>
+            post.id === postId
+              ? { ...post, likes: Math.max(0, post.likes - 1) }
+              : post
+          )
+        );
+      } else {
+        newLiked.add(postId);
+        setBlogPosts(prevPosts =>
+          prevPosts.map(post =>
+            post.id === postId
+              ? { ...post, likes: post.likes + 1 }
+              : post
+          )
+        );
+      }
+      return newLiked;
+    });
+  };
+
+  const handleBookmark = (postId: number) => {
+    setBookmarkedPosts(prev => {
+      const newBookmarked = new Set(prev);
+      if (newBookmarked.has(postId)) {
+        newBookmarked.delete(postId);
+      } else {
+        newBookmarked.add(postId);
+      }
+      return newBookmarked;
+    });
   };
 
   return (
@@ -236,8 +278,16 @@ This comprehensive guide is designed to help developers at all levels improve th
                   <span className="absolute top-2 left-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full">
                     Featured
                   </span>
-                  <button className="absolute top-2 right-2 bg-[#181A2A] p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Bookmark className="w-4 h-4 text-gray-400" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBookmark(post.id);
+                    }}
+                    className={`absolute top-2 right-2 bg-[#181A2A] p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity ${
+                      bookmarkedPosts.has(post.id) ? 'text-purple-500' : 'text-gray-400'
+                    }`}
+                  >
+                    <Bookmark className={`w-4 h-4 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
                 
@@ -267,10 +317,18 @@ This comprehensive guide is designed to help developers at all levels improve th
                     </div>
                     
                     <div className="flex items-center space-x-4 text-sm">
-                      <div className="flex items-center space-x-1">
-                        <Heart className="w-4 h-4 text-red-400" />
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLike(post.id);
+                        }}
+                        className={`flex items-center space-x-1 transition-colors ${
+                          likedPosts.has(post.id) ? 'text-red-500' : 'text-red-400 hover:text-red-500'
+                        }`}
+                      >
+                        <Heart className={`w-4 h-4 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
                         <span className="text-gray-300">{post.likes}</span>
-                      </div>
+                      </button>
                       <div className="flex items-center space-x-1">
                         <Eye className="w-4 h-4 text-blue-400" />
                         <span className="text-gray-300">{post.views}</span>
@@ -298,7 +356,7 @@ This comprehensive guide is designed to help developers at all levels improve th
         <div>
           <h2 className="text-2xl font-bold text-white mb-6">Latest Articles</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockBlogPosts.map((post) => (
+            {blogPosts.map((post) => (
               <div key={post.id} className="bg-[#23214a] rounded-xl p-4 border border-[#2d295e] hover:border-purple-500 transition-all duration-300 group">
                 <div className="relative">
                   <img
@@ -311,8 +369,16 @@ This comprehensive guide is designed to help developers at all levels improve th
                       Trending
                     </span>
                   )}
-                  <button className="absolute top-2 right-2 bg-[#181A2A] p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Bookmark className="w-4 h-4 text-gray-400" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBookmark(post.id);
+                    }}
+                    className={`absolute top-2 right-2 bg-[#181A2A] p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity ${
+                      bookmarkedPosts.has(post.id) ? 'text-purple-500' : 'text-gray-400'
+                    }`}
+                  >
+                    <Bookmark className={`w-4 h-4 ${bookmarkedPosts.has(post.id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
                 
@@ -337,8 +403,18 @@ This comprehensive guide is designed to help developers at all levels improve th
                     </div>
                     
                     <div className="flex items-center space-x-2 text-xs">
-                      <Heart className="w-3 h-3 text-red-400" />
-                      <span className="text-gray-300">{post.likes}</span>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLike(post.id);
+                        }}
+                        className={`flex items-center space-x-1 transition-colors ${
+                          likedPosts.has(post.id) ? 'text-red-500' : 'text-red-400 hover:text-red-500'
+                        }`}
+                      >
+                        <Heart className={`w-3 h-3 ${likedPosts.has(post.id) ? 'fill-current' : ''}`} />
+                        <span className="text-gray-300">{post.likes}</span>
+                      </button>
                       <Eye className="w-3 h-3 text-blue-400" />
                       <span className="text-gray-300">{post.views}</span>
                     </div>
@@ -447,16 +523,32 @@ This comprehensive guide is designed to help developers at all levels improve th
               {/* Article Actions */}
               <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-6">
-                  <button className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors">
-                    <Heart className="w-5 h-5" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLike(selectedPost.id);
+                    }}
+                    className={`flex items-center space-x-2 transition-colors ${
+                      likedPosts.has(selectedPost.id) ? 'text-red-500' : 'text-gray-500 hover:text-red-500'
+                    }`}
+                  >
+                    <Heart className={`w-5 h-5 ${likedPosts.has(selectedPost.id) ? 'fill-current' : ''}`} />
                     <span>{selectedPost.likes}</span>
                   </button>
                   <button className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors">
                     <Eye className="w-5 h-5" />
                     <span>{selectedPost.views}</span>
                   </button>
-                  <button className="text-gray-500 hover:text-purple-500 transition-colors">
-                    <Bookmark className="w-5 h-5" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleBookmark(selectedPost.id);
+                    }}
+                    className={`transition-colors ${
+                      bookmarkedPosts.has(selectedPost.id) ? 'text-purple-500' : 'text-gray-500 hover:text-purple-500'
+                    }`}
+                  >
+                    <Bookmark className={`w-5 h-5 ${bookmarkedPosts.has(selectedPost.id) ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>

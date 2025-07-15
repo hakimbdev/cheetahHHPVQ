@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MessageCircle, Eye, MoreVertical, Edit, Trash2, Share, Calendar, Clock } from 'lucide-react';
+import { Heart, MessageCircle, Eye, MoreVertical, Edit, Trash2, Share, Calendar, Clock, Bookmark } from 'lucide-react';
 
 interface MyBlogPost {
   id: string;
@@ -25,6 +25,11 @@ interface MyBlogCardProps {
 
 const MyBlogCard: React.FC<MyBlogCardProps> = ({ blog, darkMode, onEdit, onDelete, onShare }) => {
   const [showMenu, setShowMenu] = React.useState(false);
+  const [showCommentBox, setShowCommentBox] = React.useState(false);
+  const [comments, setComments] = React.useState<string[]>([]);
+  const [newComment, setNewComment] = React.useState('');
+  const [liked, setLiked] = React.useState(false);
+  const [bookmarked, setBookmarked] = React.useState(false);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -146,20 +151,71 @@ const MyBlogCard: React.FC<MyBlogCardProps> = ({ blog, darkMode, onEdit, onDelet
         {/* Stats */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setLiked(l => !l)}
+              className={`flex items-center space-x-1 transition-colors ${liked ? 'text-red-500' : darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}
+            >
+              <Heart className={`w-4 h-4 ${liked ? 'fill-current' : ''}`} />
+              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.likes + (liked ? 1 : 0)}</span>
+            </button>
+            <button
+              onClick={() => setShowCommentBox(prev => !prev)}
+              className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}
+            >
+              <MessageCircle className="w-4 h-4" />
+              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.comments + comments.length}</span>
+            </button>
             <div className="flex items-center space-x-1">
               <Eye className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
               <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.views}</span>
             </div>
-            <div className="flex items-center space-x-1">
-              <Heart className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.likes}</span>
-            </div>
-            <div className="flex items-center space-x-1">
-              <MessageCircle className={`w-4 h-4 ${darkMode ? 'text-gray-400' : 'text-gray-500'}`} />
-              <span className={`text-sm ${darkMode ? 'text-gray-400' : 'text-gray-500'}`}>{blog.comments}</span>
-            </div>
+            <button
+              onClick={() => setBookmarked(b => !b)}
+              className={`transition-colors ${bookmarked ? 'text-purple-500' : darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'}`}
+            >
+              <Bookmark className={`w-4 h-4 ${bookmarked ? 'fill-current' : ''}`} />
+            </button>
           </div>
         </div>
+        {/* Comment Box */}
+        {showCommentBox && (
+          <div className="mt-4 bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+            <div className="mb-2 text-gray-700 dark:text-gray-200 font-semibold">Comments</div>
+            <div className="space-y-2 max-h-32 overflow-y-auto mb-2">
+              {comments.length === 0 ? (
+                <div className="text-gray-400 text-sm">No comments yet. Be the first to comment!</div>
+              ) : (
+                comments.map((c, idx) => (
+                  <div key={idx} className="text-gray-700 dark:text-gray-200 text-sm bg-white/70 dark:bg-gray-900/40 rounded px-2 py-1">{c}</div>
+                ))
+              )}
+            </div>
+            <form
+              onSubmit={e => {
+                e.preventDefault();
+                if (newComment.trim()) {
+                  setComments([...comments, newComment]);
+                  setNewComment('');
+                }
+              }}
+              className="flex items-center space-x-2"
+            >
+              <input
+                type="text"
+                value={newComment}
+                onChange={e => setNewComment(e.target.value)}
+                placeholder="Add a comment..."
+                className="flex-1 px-3 py-1 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+              />
+              <button
+                type="submit"
+                className="bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 text-sm font-medium"
+              >
+                Post
+              </button>
+            </form>
+          </div>
+        )}
       </div>
 
       {/* Click outside to close menu */}

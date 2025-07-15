@@ -22,6 +22,11 @@ function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [showMoreArticles, setShowMoreArticles] = useState(false);
 
+  // Blog interaction states
+  const [likedPosts, setLikedPosts] = useState<Set<string>>(new Set());
+  const [bookmarkedPosts, setBookmarkedPosts] = useState<Set<string>>(new Set());
+  const [commentCounts, setCommentCounts] = useState<{[key: string]: number}>({});
+
   // LIFTED PROFILE STATE
   const [profile, setProfile] = useState({
     name: 'Precious',
@@ -216,6 +221,64 @@ function App() {
     setCurrentPage('profile');
   };
 
+  // Blog interaction handlers
+  const handleLike = (blogId: string) => {
+    setLikedPosts(prev => {
+      const newLiked = new Set(prev);
+      if (newLiked.has(blogId)) {
+        newLiked.delete(blogId);
+        // Decrease like count
+        setBlogs(prevBlogs =>
+          prevBlogs.map(blog =>
+            blog.id === blogId
+              ? { ...blog, likes: Math.max(0, blog.likes - 1) }
+              : blog
+          )
+        );
+      } else {
+        newLiked.add(blogId);
+        // Increase like count
+        setBlogs(prevBlogs =>
+          prevBlogs.map(blog =>
+            blog.id === blogId
+              ? { ...blog, likes: blog.likes + 1 }
+              : blog
+          )
+        );
+      }
+      return newLiked;
+    });
+  };
+
+  const handleBookmark = (blogId: string) => {
+    setBookmarkedPosts(prev => {
+      const newBookmarked = new Set(prev);
+      if (newBookmarked.has(blogId)) {
+        newBookmarked.delete(blogId);
+      } else {
+        newBookmarked.add(blogId);
+      }
+      return newBookmarked;
+    });
+  };
+
+  const handleComment = (blogId: string) => {
+    // Simulate adding a comment
+    setCommentCounts(prev => ({
+      ...prev,
+      [blogId]: (prev[blogId] || 0) + 1
+    }));
+
+    // Update blog comments count
+    setBlogs(prevBlogs =>
+      prevBlogs.map(blog =>
+        blog.id === blogId
+          ? { ...blog, comments: blog.comments + 1 }
+          : blog
+      )
+    );
+  };
+
   const displayedBlogs = showMoreArticles ? [...blogs, ...additionalArticles] : blogs;
 
   return (
@@ -295,7 +358,15 @@ function App() {
 
               {/* Featured Blog */}
               <div>
-                <FeaturedBlog darkMode={darkMode} onAuthorClick={handleAuthorClick} />
+                <FeaturedBlog
+                  darkMode={darkMode}
+                  onAuthorClick={handleAuthorClick}
+                  onLike={handleLike}
+                  onBookmark={handleBookmark}
+                  onComment={handleComment}
+                  isLiked={likedPosts.has('featured-blog')}
+                  isBookmarked={bookmarkedPosts.has('featured-blog')}
+                />
               </div>
 
               {/* Filter Tags */}
@@ -317,7 +388,17 @@ function App() {
               {/* Blog Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
                 {displayedBlogs.map((blog) => (
-                  <BlogCard key={blog.id} blog={blog} darkMode={darkMode} onAuthorClick={handleAuthorClick} />
+                  <BlogCard
+                    key={blog.id}
+                    blog={blog}
+                    darkMode={darkMode}
+                    onAuthorClick={handleAuthorClick}
+                    onLike={handleLike}
+                    onBookmark={handleBookmark}
+                    onComment={handleComment}
+                    isLiked={likedPosts.has(blog.id)}
+                    isBookmarked={bookmarkedPosts.has(blog.id)}
+                  />
                 ))}
               </div>
 

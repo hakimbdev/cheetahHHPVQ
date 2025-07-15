@@ -30,10 +30,27 @@ interface BlogCardProps {
   blog: BlogPost;
   darkMode: boolean;
   onAuthorClick?: (authorName: string) => void;
+  onLike?: (blogId: string) => void;
+  onBookmark?: (blogId: string) => void;
+  onComment?: (blogId: string) => void;
+  isLiked?: boolean;
+  isBookmarked?: boolean;
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ blog, darkMode, onAuthorClick }) => {
+const BlogCard: React.FC<BlogCardProps> = ({
+  blog,
+  darkMode,
+  onAuthorClick,
+  onLike,
+  onBookmark,
+  onComment,
+  isLiked = false,
+  isBookmarked = false
+}) => {
   const [showModal, setShowModal] = useState(false);
+  const [showCommentBox, setShowCommentBox] = useState(false);
+  const [comments, setComments] = useState<string[]>([]);
+  const [newComment, setNewComment] = useState('');
 
   const relatedArticles: RelatedArticle[] = [
     {
@@ -135,18 +152,44 @@ This comprehensive guide is designed to help developers at all levels improve th
           {/* Actions */}
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-              <button className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'}`}>
-                <Heart className="w-4 h-4" />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onLike?.(blog.id);
+                }}
+                className={`flex items-center space-x-1 transition-colors ${
+                  isLiked
+                    ? 'text-red-500'
+                    : darkMode ? 'text-gray-400 hover:text-red-400' : 'text-gray-500 hover:text-red-500'
+                }`}
+              >
+                <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
                 <span className="text-sm">{blog.likes}</span>
               </button>
-              <button className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowCommentBox((prev) => !prev);
+                }}
+                className={`flex items-center space-x-1 transition-colors ${darkMode ? 'text-gray-400 hover:text-blue-400' : 'text-gray-500 hover:text-blue-500'}`}
+              >
                 <MessageCircle className="w-4 h-4" />
                 <span className="text-sm">{blog.comments}</span>
               </button>
             </div>
             <div className="flex items-center space-x-2">
-              <button className={`transition-colors ${darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'}`}>
-                <Bookmark className="w-4 h-4" />
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onBookmark?.(blog.id);
+                }}
+                className={`transition-colors ${
+                  isBookmarked
+                    ? 'text-purple-500'
+                    : darkMode ? 'text-gray-400 hover:text-purple-400' : 'text-gray-500 hover:text-purple-500'
+                }`}
+              >
+                <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
               </button>
               <button
                 onClick={() => setShowModal(true)}
@@ -157,6 +200,46 @@ This comprehensive guide is designed to help developers at all levels improve th
               </button>
             </div>
           </div>
+
+          {/* Comment Box */}
+          {showCommentBox && (
+            <div className="mt-4 bg-gray-100 dark:bg-gray-800 rounded-lg p-4">
+              <div className="mb-2 text-gray-700 dark:text-gray-200 font-semibold">Comments</div>
+              <div className="space-y-2 max-h-32 overflow-y-auto mb-2">
+                {comments.length === 0 ? (
+                  <div className="text-gray-400 text-sm">No comments yet. Be the first to comment!</div>
+                ) : (
+                  comments.map((c, idx) => (
+                    <div key={idx} className="text-gray-700 dark:text-gray-200 text-sm bg-white/70 dark:bg-gray-900/40 rounded px-2 py-1">{c}</div>
+                  ))
+                )}
+              </div>
+              <form
+                onSubmit={e => {
+                  e.preventDefault();
+                  if (newComment.trim()) {
+                    setComments([...comments, newComment]);
+                    setNewComment('');
+                  }
+                }}
+                className="flex items-center space-x-2"
+              >
+                <input
+                  type="text"
+                  value={newComment}
+                  onChange={e => setNewComment(e.target.value)}
+                  placeholder="Add a comment..."
+                  className="flex-1 px-3 py-1 rounded border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+                />
+                <button
+                  type="submit"
+                  className="bg-purple-600 text-white px-3 py-1 rounded hover:bg-purple-700 text-sm font-medium"
+                >
+                  Post
+                </button>
+              </form>
+            </div>
+          )}
         </div>
       </div>
 
@@ -225,16 +308,38 @@ This comprehensive guide is designed to help developers at all levels improve th
               {/* Article Actions */}
               <div className="flex items-center justify-between pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex items-center space-x-6">
-                  <button className="flex items-center space-x-2 text-gray-500 hover:text-red-500 transition-colors">
-                    <Heart className="w-5 h-5" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onLike?.(blog.id);
+                    }}
+                    className={`flex items-center space-x-2 transition-colors ${
+                      isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-500'
+                    }`}
+                  >
+                    <Heart className={`w-5 h-5 ${isLiked ? 'fill-current' : ''}`} />
                     <span>{blog.likes}</span>
                   </button>
-                  <button className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onComment?.(blog.id);
+                    }}
+                    className="flex items-center space-x-2 text-gray-500 hover:text-blue-500 transition-colors"
+                  >
                     <MessageCircle className="w-5 h-5" />
                     <span>{blog.comments}</span>
                   </button>
-                  <button className="text-gray-500 hover:text-purple-500 transition-colors">
-                    <Bookmark className="w-5 h-5" />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onBookmark?.(blog.id);
+                    }}
+                    className={`transition-colors ${
+                      isBookmarked ? 'text-purple-500' : 'text-gray-500 hover:text-purple-500'
+                    }`}
+                  >
+                    <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current' : ''}`} />
                   </button>
                 </div>
               </div>
